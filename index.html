@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Leo Müller — MSc ETH Arch</title>
+  
+  <!-- Custom Circle Favicon (Soft Grey) -->
+  <link id="favicon" rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%23e5e5e5'/%3E%3C/svg%3E" />
+  
+  <style>
+    html, body {
+      background-color: #000000;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+    body { opacity: 0; }
+    .bg-video { visibility: hidden; opacity: 0; }
+
+    /* Anti-flash rule that only applies when body does NOT have info-active */
+    body:not(.info-active) .hide-when-inactive {
+      opacity: 0;
+      visibility: hidden;
+    }
+    body:not(.info-active) .name-long {
+      display: none;
+    }
+  </style>
+
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- GoatCounter Analytics -->
+  <script data-goatcounter="https://leomueller.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</head>
+<body>
+
+  <!-- Background Video Engine -->
+  <div class="video-wrapper">
+    <video id="bg-video" class="bg-video" autoplay loop muted playsinline preload="auto"></video>
+  </div>
+
+  <!-- Main UI Layer -->
+  <div id="ui-layer">
+    <div class="grid-container">
+      
+      <!-- Left: Name -->
+      <div class="col-name">
+        <div class="text name-short">Leo Müller</div>
+        <div class="text name-long" aria-hidden="true">Leo Müller (*1995 Berlin, DE)</div>
+      </div>
+
+      <!-- Center: Consolidated Info Block -->
+      <div class="col-center hide-when-inactive" aria-hidden="true">
+        <div class="info-wrapper">
+          
+          <!-- About Section -->
+          <div class="block about-block">
+            <div class="title">ABOUT</div>
+            <div class="text blocksatz" lang="en">
+              is an architect (MSc ETH Arch) working between Zurich and Berlin. His practice spans architecture, spatial design, and research. It explores the histories embedded in existing buildings and the traces, layers, and contradictions that reveal architecture as a continuous process rather than a finished object.
+            </div>
+          </div>
+          
+          <!-- Contact & Address Grid -->
+          <div class="bottom-grid">
+            
+            <!-- Swiss Address -->
+            <div class="block">
+              <div class="title">ADDRESS</div>
+              <div class="text">
+                Schreinerstrasse 62a<br>
+                8004 Zurich<br>
+                Switzerland
+              </div>
+            </div>
+
+            <!-- German Address -->
+            <div class="block address-de">
+              <div class="title hide-mobile" style="visibility: hidden;" aria-hidden="true">ADDRESS</div>
+              <div class="text">
+                Knesebeckstraße 33/34<br>
+                10623 Berlin<br>
+                Germany
+              </div>
+            </div>
+
+            <!-- Contact -->
+            <div class="block contact-block">
+              <div class="title">CONTACT</div>
+              <div class="contact-links">
+                <button id="mobile-link" class="text interactive-link-btn" type="button">mobile</button><br>
+                <button id="email-link" class="text interactive-link-btn" type="button">email</button><br>
+                <button id="insta-link" class="text interactive-link-btn" type="button">social</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Toggle Button -->
+      <div class="col-dot">
+        <button id="circle-btn" aria-label="Toggle Information" aria-expanded="false" tabindex="0"></button>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

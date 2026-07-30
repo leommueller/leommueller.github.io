@@ -1,0 +1,313 @@
+@font-face {
+  font-family: 'FaktPro-Blond';
+  src: local('FaktPro-Blond'), local('Fakt Pro Blond');
+  font-weight: 400;
+  font-style: normal;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+html, body {
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh; 
+  overflow: hidden;
+  background-color: #000000; 
+  font-family: 'FaktPro-Blond', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  position: relative;
+  opacity: 0;
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+body.loaded {
+  opacity: 1;
+}
+
+/* Background Video Settings */
+.video-wrapper {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background-color: #000000;
+}
+
+.bg-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  pointer-events: none;
+  visibility: hidden;
+  opacity: 0;
+  filter: invert(0) contrast(1.02) brightness(0.98);
+  transition: opacity 0.8s ease, filter 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.bg-video.loaded {
+  visibility: visible;
+  opacity: 1;
+}
+
+body.info-active .bg-video {
+  filter: invert(1) contrast(1.02) brightness(1.02);
+}
+
+/* UI Layer */
+#ui-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center; 
+  padding: 0 clamp(1.5rem, 3vw, 3rem);
+  pointer-events: none; 
+  mix-blend-mode: difference;
+  isolation: isolate;
+}
+
+/* -------------------------------------------
+   DYNAMIC DESKTOP GRID SYSTEM 
+------------------------------------------- */
+.grid-container {
+  display: grid;
+  width: 100%;
+  grid-template-columns: auto 850px min-content;
+  justify-content: space-between;
+  align-items: center;
+  pointer-events: auto;
+}
+
+/* Central Block positioning */
+.col-center {
+  display: flex;
+  justify-content: center;
+  padding: 0 2rem;
+  width: 100%;
+}
+
+.info-wrapper {
+  width: 100%;
+  max-width: 850px; 
+}
+
+/* Bottom Grid layout */
+.bottom-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: clamp(1.5rem, 3vw, 3rem);
+  margin-top: clamp(2rem, 4vh, 5rem);
+}
+
+/* Fluid Text Specs */
+.text {
+  font-family: 'FaktPro-Blond', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: clamp(15px, 1.3vw, 20px);
+  line-height: clamp(19px, 1.6vw, 24px);
+  color: #ffffff; 
+}
+
+.title {
+  font-family: 'FaktPro-Blond', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: clamp(11px, 0.9vw, 13px);
+  line-height: 16px;
+  text-transform: uppercase;
+  margin-bottom: 12px; 
+  color: #ffffff; 
+}
+
+.block {
+  margin-bottom: 0; 
+}
+
+.blocksatz {
+  text-align: justify;
+  hyphens: auto;
+  -webkit-hyphens: auto;
+}
+
+/* Horizontal Alignments & Fixed Width for Left Column to prevent jumping */
+.col-name {
+  position: relative;
+  align-self: flex-start;
+  margin-top: 28px; 
+  min-width: 280px; /* Locks the column width to fit the longest text string */
+}
+
+.col-dot {
+  display: flex;
+  justify-content: flex-end;
+  align-self: flex-start;
+  margin-top: 30px; 
+}
+
+/* Name Toggling with Fade instead of instant display swap */
+.name-short, .name-long {
+  position: absolute;
+  top: 0;
+  left: 0;
+  white-space: nowrap;
+  transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity;
+}
+
+.name-short {
+  opacity: 1;
+  visibility: visible;
+}
+
+.name-long {
+  opacity: 0;
+  visibility: hidden;
+}
+
+body.info-active .name-short {
+  opacity: 0;
+  visibility: hidden;
+}
+
+body.info-active .name-long {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Center Block Toggling with GPU Acceleration */
+.hide-when-inactive {
+  opacity: 0;
+  visibility: hidden;
+  transform: translateZ(0);
+  will-change: opacity, transform;
+  transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), 
+              transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), 
+              visibility 0.4s ease;
+}
+
+body.info-active .hide-when-inactive {
+  opacity: 1;
+  visibility: visible;
+  transform: translateZ(0);
+}
+
+/* Dot Toggle Button */
+#circle-btn {
+  width: 20px; 
+  height: 20px;
+  background-color: #ffffff; 
+  border-radius: 50%;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  transform: scale(1);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+}
+
+#circle-btn:hover {
+  opacity: 0.6;
+}
+
+body.info-active #circle-btn {
+  transform: scale(0.65);
+}
+
+/* Interactive Link Buttons */
+.interactive-link-btn {
+  font-family: 'FaktPro-Blond', sans-serif !important;
+  font-size: clamp(15px, 1.3vw, 20px) !important;
+  line-height: clamp(19px, 1.6vw, 24px) !important;
+  background: transparent !important;
+  background-color: transparent !important;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  transition: opacity 0.3s ease;
+  text-align: left;
+  color: #ffffff !important;
+}
+
+.interactive-link-btn:hover {
+  opacity: 0.6;
+}
+
+/* -------------------------------------------
+   MOBILE GRID SYSTEM (Vertical Layout)
+------------------------------------------- */
+@media (max-width: 900px) {
+  #ui-layer {
+    padding: 2rem 1.5rem;
+    align-items: stretch;
+  }
+
+  .grid-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+  }
+
+  .col-name {
+    margin-top: 0;
+    min-height: 28px;
+    min-width: 0; /* Reset fixed width on mobile */
+    flex-shrink: 0;
+    width: 100%;
+  }
+
+  .name-short, .name-long {
+    position: relative; /* Allow natural flow on mobile */
+    white-space: normal;
+  }
+
+  .col-center {
+    flex-grow: 1;
+    padding: 1.5rem 0;
+    align-items: center;
+    justify-content: flex-start;
+    overflow-y: auto; 
+  }
+
+  .bottom-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    margin-top: 2.5rem;
+  }
+
+  .hide-mobile {
+    display: none; 
+  }
+
+  .col-dot {
+    margin-top: 0; 
+    justify-content: center;
+    width: 100%;
+    flex-shrink: 0;
+    padding-top: 1rem;
+  }
+}
+
+/* -------------------------------------------
+   ACCESSIBILITY: PREFERS REDUCED MOTION
+------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  body, .bg-video, #circle-btn, .hide-when-inactive, .name-short, .name-long {
+    transition: none !important;
+  }
+}
