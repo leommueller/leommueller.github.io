@@ -101,12 +101,17 @@ body.info-active .bg-video {
   max-width: 850px; 
 }
 
-/* Bottom Grid layout */
+/* Bottom Grid layout - Adjusted to stretch apart */
 .bottom-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: clamp(1.5rem, 3vw, 3rem);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
   margin-top: clamp(2rem, 4vh, 5rem);
+  width: 100%;
+}
+
+.bottom-grid .block {
+  flex: 0 1 auto;
 }
 
 /* Fluid Text Specs */
@@ -145,7 +150,7 @@ body.info-active .bg-video {
   position: relative;
   align-self: flex-start;
   margin-top: 28px; 
-  min-width: 280px; /* Locks the column width to fit the longest text string */
+  min-width: 280px;
 }
 
 .col-dot {
@@ -155,7 +160,7 @@ body.info-active .bg-video {
   margin-top: 30px; 
 }
 
-/* Name Toggling with Fade instead of instant display swap */
+/* Name Toggling with Fade */
 .name-short, .name-long {
   position: absolute;
   top: 0;
@@ -266,13 +271,13 @@ body.info-active #circle-btn {
   .col-name {
     margin-top: 0;
     min-height: 28px;
-    min-width: 0; /* Reset fixed width on mobile */
+    min-width: 0;
     flex-shrink: 0;
     width: 100%;
   }
 
   .name-short, .name-long {
-    position: relative; /* Allow natural flow on mobile */
+    position: relative;
     white-space: normal;
   }
 
@@ -285,7 +290,7 @@ body.info-active #circle-btn {
   }
 
   .bottom-grid {
-    grid-template-columns: 1fr;
+    flex-direction: column;
     gap: 2rem;
     margin-top: 2.5rem;
   }
