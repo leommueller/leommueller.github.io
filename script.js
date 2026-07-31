@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const video = document.getElementById('bg-video');
   const circleBtn = document.getElementById('circle-btn');
   const infoCols = document.querySelectorAll('.hide-when-inactive');
+  const nameDetail = document.querySelector('.name-detail');
   
   // Contact Links
   const mobileLink = document.getElementById('mobile-link');
@@ -34,9 +35,13 @@ document.addEventListener('DOMContentLoaded', () => {
   // Check user motion preferences
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // Fade in page
+  // Fade in page and initialize layout transitions safely
   requestAnimationFrame(() => {
     document.body.classList.add('loaded');
+    // Prevents the dot from animating on mobile during page reload
+    setTimeout(() => {
+      document.body.classList.add('layout-ready');
+    }, 150);
   });
 
   // Pick random video
@@ -69,12 +74,12 @@ document.addEventListener('DOMContentLoaded', () => {
     if (video.readyState >= 3) revealVideo();
   }, 300);
 
-  // Optimized Temporal Jumps using requestIdleCallback to prevent frame drops/lag
+  // Optimized Temporal Jumps
   function initTemporalJumps() {
     if (prefersReducedMotion || !video.duration || isNaN(video.duration)) return;
 
     function scheduleNextJump() {
-      const randomInterval = Math.random() * 6000 + 4000; // 4 to 10 seconds
+      const randomInterval = Math.random() * 6000 + 4000; 
       setTimeout(() => {
         const executeJump = () => {
           if (!video.paused) {
@@ -104,10 +109,12 @@ document.addEventListener('DOMContentLoaded', () => {
     if (isBodyActive) {
       document.body.classList.remove('info-active');
       infoCols.forEach(col => col.setAttribute('aria-hidden', 'true'));
+      nameDetail.setAttribute('aria-hidden', 'true');
       updateFavicon(favIconNormal); 
     } else {
       document.body.classList.add('info-active');
       infoCols.forEach(col => col.setAttribute('aria-hidden', 'false'));
+      nameDetail.setAttribute('aria-hidden', 'false');
       updateFavicon(favIconShrunk); 
     }
   }
@@ -143,7 +150,7 @@ document.addEventListener('DOMContentLoaded', () => {
     window.open(i1 + i2 + i3, "_blank", "noopener,noreferrer");
   }
 
-  // Assign Click Events to semantic buttons
+  // Assign Click Events
   if (mobileLink) mobileLink.addEventListener('click', triggerMobile);
   if (emailLink) emailLink.addEventListener('click', triggerEmail);
   if (instaLink) instaLink.addEventListener('click', triggerInsta);
