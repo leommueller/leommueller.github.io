@@ -4,23 +4,18 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <!-- Meta Title -->
-  <title>Leo Müller — Architect / Architekt (MSc ETH Arch)</title>
+  <!-- Meta Title (Browser Tab) -->
+  <title>Leo Müller</title>
   
   <!-- Meta Descriptions (Bilingual) -->
   <meta name="description" content="Leo Müller is an architect (MSc ETH Arch) working between Zurich and Berlin, specializing in architecture, spatial design, and research. — Architekt tätig zwischen Zürich und Berlin." lang="en">
   <meta name="description" content="Leo Müller ist Architekt (MSc ETH Arch) mit Sitz in Zürich und Berlin. Seine Praxis umfasst Architektur, Raumgestaltung und Forschung. — Architect working between Zurich and Berlin." lang="de">
 
-  <!-- Open Graph Tags (Facebook, LinkedIn, iMessage) -->
-  <meta property="og:title" content="Leo Müller — Architect / Architekt (MSc ETH Arch)" />
-  <meta property="og:description" content="Architect working between Zurich and Berlin, specializing in architecture, spatial design, and research. / Architekt tätig zwischen Zürich und Berlin." />
+  <!-- Open Graph Tags -->
+  <meta property="og:title" content="Leo Müller" />
+  <meta property="og:description" content="Architect working between Zurich and Berlin, specializing in architecture, spatial design, and research." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://leomueller.xyz" />
-
-  <!-- Twitter Card Tags -->
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Leo Müller — Architect / Architekt (MSc ETH Arch)" />
-  <meta name="twitter:description" content="Architect working between Zurich and Berlin, specializing in architecture, spatial design, and research. / Architekt tätig zwischen Zürich und Berlin." />
 
   <!-- Structured Data: Person Schema -->
   <script type="application/ld+json">
@@ -56,7 +51,7 @@
   }
   </script>
 
-  <!-- Custom Circle Favicon (Soft Grey) -->
+  <!-- Custom Circle Favicon -->
   <link id="favicon" rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%23e5e5e5'/%3E%3C/svg%3E" />
   
   <style>
@@ -69,13 +64,11 @@
     body { opacity: 0; }
     .bg-video { visibility: hidden; opacity: 0; }
 
-    /* Anti-flash rule that only applies when body does NOT have info-active */
-    body:not(.info-active) .hide-when-inactive {
+    /* Anti-flash FOUC rule for both Info Block and the Subtitle */
+    body:not(.info-active) .hide-when-inactive,
+    body:not(.info-active) .name-detail {
       opacity: 0;
       visibility: hidden;
-    }
-    body:not(.info-active) .name-long {
-      display: none;
     }
   </style>
 
@@ -95,10 +88,10 @@
   <div id="ui-layer">
     <div class="grid-container">
       
-      <!-- Left: Name -->
+      <!-- Left: Name & Detail strictly bound inline -->
       <div class="col-name">
-        <div class="text name-short">Leo Müller</div>
-        <div class="text name-long" aria-hidden="true">Leo Müller (*1995 Berlin, DE)</div>
+        <span class="text name-static">Leo Müller</span>
+        <span class="text name-detail" aria-hidden="true">(*1995 Berlin, DE)</span>
       </div>
 
       <!-- Center: Consolidated Info Block -->
@@ -113,11 +106,11 @@
             </div>
           </div>
           
-          <!-- Contact & Address Grid -->
+          <!-- Contact & Address Grid (Desktop three columns restored) -->
           <div class="bottom-grid">
             
             <!-- Swiss Address -->
-            <div class="block">
+            <div class="block address-ch">
               <div class="title">ADDRESS</div>
               <div class="text">
                 Schreinerstrasse 62a<br>
@@ -126,7 +119,7 @@
               </div>
             </div>
 
-            <!-- German Address -->
+            <!-- German Address (Centered on wide version) -->
             <div class="block address-de">
               <div class="title hide-mobile" style="visibility: hidden;" aria-hidden="true">ADDRESS</div>
               <div class="text">
