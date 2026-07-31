@@ -88,7 +88,6 @@ body.info-active .bg-video {
   pointer-events: auto;
 }
 
-/* Central Block positioning */
 .col-center {
   display: flex;
   justify-content: center;
@@ -101,7 +100,7 @@ body.info-active .bg-video {
   max-width: 850px; 
 }
 
-/* Bottom Grid layout - Stretched apart */
+/* Restored desktop layout: perfectly spreads the 3 columns (left, center, right) */
 .bottom-grid {
   display: flex;
   justify-content: space-between;
@@ -135,22 +134,53 @@ body.info-active .bg-video {
   color: #ffffff; 
 }
 
-.block {
-  margin-bottom: 0; 
-}
-
 .blocksatz {
   text-align: justify;
   hyphens: auto;
   -webkit-hyphens: auto;
 }
 
-/* Horizontal Alignments & Fixed Width for Left Column to prevent jumping */
+/* Guaranteed Inline Name Logic */
 .col-name {
   position: relative;
   align-self: flex-start;
   margin-top: 28px; 
   min-width: 280px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: baseline;
+  gap: 8px;
+  white-space: nowrap;
+}
+
+.name-static {
+  opacity: 1;
+  visibility: visible;
+  white-space: nowrap;
+}
+
+/* Simultaneous Fade Animation */
+.name-detail {
+  opacity: 0;
+  visibility: hidden;
+  white-space: nowrap;
+  transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity;
+}
+
+.hide-when-inactive {
+  opacity: 0;
+  visibility: hidden;
+  transform: translateZ(0);
+  will-change: opacity, transform;
+  transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+body.info-active .name-detail,
+body.info-active .hide-when-inactive {
+  opacity: 1;
+  visibility: visible;
 }
 
 .col-dot {
@@ -158,53 +188,6 @@ body.info-active .bg-video {
   justify-content: flex-end;
   align-self: flex-start;
   margin-top: 30px; 
-}
-
-/* Name Toggling with Fade */
-.name-short, .name-long {
-  position: absolute;
-  top: 0;
-  left: 0;
-  white-space: nowrap;
-  transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-  will-change: opacity;
-}
-
-.name-short {
-  opacity: 1;
-  visibility: visible;
-}
-
-.name-long {
-  opacity: 0;
-  visibility: hidden;
-}
-
-body.info-active .name-short {
-  opacity: 0;
-  visibility: hidden;
-}
-
-body.info-active .name-long {
-  opacity: 1;
-  visibility: visible;
-}
-
-/* Center Block Toggling with GPU Acceleration */
-.hide-when-inactive {
-  opacity: 0;
-  visibility: hidden;
-  transform: translateZ(0);
-  will-change: opacity, transform;
-  transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), 
-              transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), 
-              visibility 0.4s ease;
-}
-
-body.info-active .hide-when-inactive {
-  opacity: 1;
-  visibility: visible;
-  transform: translateZ(0);
 }
 
 /* Dot Toggle Button */
@@ -217,7 +200,7 @@ body.info-active .hide-when-inactive {
   outline: none;
   cursor: pointer;
   transform: scale(1);
-  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
 }
 
 #circle-btn:hover {
@@ -253,61 +236,102 @@ body.info-active #circle-btn {
 }
 
 /* -------------------------------------------
-   MOBILE GRID SYSTEM (Vertical Layout Stabilized)
+   MOBILE GRID SYSTEM 
 ------------------------------------------- */
 @media (max-width: 900px) {
   #ui-layer {
-    padding: 2rem 1.5rem;
+    padding: 1.5rem;
     align-items: stretch;
   }
 
   .grid-container {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: flex-start;
     height: 100%;
+    position: relative; /* Acts as the absolute bounding box for the dot */
   }
 
+  /* Name block strictly constrained to one line */
   .col-name {
     margin-top: 0;
-    min-height: 24px;
-    min-width: 0;
-    flex-shrink: 0;
     width: 100%;
-    position: relative;
-  }
-
-  .name-short, .name-long {
-    position: absolute;
-    top: 0;
-    left: 0;
-    white-space: normal;
+    gap: 6px;
+    flex-shrink: 0;
   }
 
   .col-center {
     flex-grow: 1;
-    padding: 1.5rem 0;
-    align-items: center;
-    justify-content: flex-start;
+    padding: 2.5rem 0 0 0;
+    align-items: flex-end;
+    justify-content: flex-end;
     overflow-y: auto; 
   }
 
-  .bottom-grid {
+  .info-wrapper {
+    width: 100%;
+    display: flex;
     flex-direction: column;
-    gap: 2rem;
-    margin-top: 2.5rem;
+    justify-content: flex-end;
+  }
+
+  /* Mobile address stacking with increased vertical gap */
+  .bottom-grid {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    row-gap: 40px; 
+    column-gap: 1.5rem;
+    align-items: flex-start;
+    margin-top: 2rem;
+  }
+
+  .address-ch { 
+    grid-column: 1 / 2; 
+    grid-row: 1 / 2; 
+  }
+  
+  .address-de { 
+    grid-column: 1 / 2; 
+    grid-row: 2 / 3; 
+  }
+  
+  .contact-block { 
+    grid-column: 2 / 3; 
+    grid-row: 1 / 2; 
+    text-align: right; 
+  }
+
+  .contact-links {
+    text-align: right;
   }
 
   .hide-mobile {
     display: none; 
   }
 
+  /* MOBILE DOT MOVEMENT ENGINE (Fixes the page reload jump) */
   .col-dot {
-    margin-top: 0; 
-    justify-content: center;
-    width: 100%;
-    flex-shrink: 0;
-    padding-top: 1rem;
+    position: absolute;
+    bottom: 0;  
+    right: 0;   
+    margin-top: 0;
+    z-index: 20;
+    transform: translateX(calc(-50vw + 1.5rem + 10px));
+    /* Transition is explicitly OFF by default so it doesn't jump on reload */
+    transition: none; 
+  }
+
+  /* Transition is safely enabled 150ms after the page loads */
+  body.layout-ready .col-dot {
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); 
+  }
+
+  body.info-active .col-dot {
+    transform: translateX(3.5px) translateY(3.5px);
+  }
+
+  #circle-btn {
+    pointer-events: auto;
   }
 }
 
@@ -315,7 +339,7 @@ body.info-active #circle-btn {
    ACCESSIBILITY: PREFERS REDUCED MOTION
 ------------------------------------------- */
 @media (prefers-reduced-motion: reduce) {
-  body, .bg-video, #circle-btn, .hide-when-inactive, .name-short, .name-long {
+  body, .bg-video, #circle-btn, .hide-when-inactive, .name-static, .name-detail, .col-dot {
     transition: none !important;
   }
 }
