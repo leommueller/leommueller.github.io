@@ -7,7 +7,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const video = document.getElementById('bg-video');
   const circleBtn = document.getElementById('circle-btn');
   const infoCols = document.querySelectorAll('.hide-when-inactive');
-  const favicon = document.getElementById('favicon');
   
   // Contact Links
   const mobileLink = document.getElementById('mobile-link');
@@ -17,6 +16,20 @@ document.addEventListener('DOMContentLoaded', () => {
   // Favicon SVGs (Normal: r=50, Shrunk: r=32.5 matching scale(0.65))
   const favIconNormal = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%23e5e5e5'/%3E%3C/svg%3E";
   const favIconShrunk = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='32.5' fill='%23e5e5e5'/%3E%3C/svg%3E";
+
+  // Safari-safe favicon update function
+  function updateFavicon(iconUrl) {
+    let existingFavicon = document.getElementById('favicon');
+    if (existingFavicon) {
+      existingFavicon.remove();
+    }
+    const newFavicon = document.createElement('link');
+    newFavicon.id = 'favicon';
+    newFavicon.rel = 'icon';
+    newFavicon.type = 'image/svg+xml';
+    newFavicon.href = iconUrl;
+    document.head.appendChild(newFavicon);
+  }
 
   // Check user motion preferences
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -83,7 +96,7 @@ document.addEventListener('DOMContentLoaded', () => {
   video.addEventListener('loadedmetadata', initTemporalJumps);
   if (video.readyState >= 1) initTemporalJumps();
 
-  // Toggle info panel, accessibility states, and favicon
+  // Toggle info panel, accessibility states, and Safari-safe favicon
   function toggleInfoPanel() {
     const isBodyActive = document.body.classList.contains('info-active');
     circleBtn.setAttribute('aria-expanded', !isBodyActive);
@@ -91,11 +104,11 @@ document.addEventListener('DOMContentLoaded', () => {
     if (isBodyActive) {
       document.body.classList.remove('info-active');
       infoCols.forEach(col => col.setAttribute('aria-hidden', 'true'));
-      favicon.href = favIconNormal; 
+      updateFavicon(favIconNormal); 
     } else {
       document.body.classList.add('info-active');
       infoCols.forEach(col => col.setAttribute('aria-hidden', 'false'));
-      favicon.href = favIconShrunk; 
+      updateFavicon(favIconShrunk); 
     }
   }
 
