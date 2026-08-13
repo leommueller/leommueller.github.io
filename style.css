@@ -307,7 +307,7 @@ body.info-active #circle-btn {
     display: none; 
   }
 
-  /* MOBILE DOT MOVEMENT ENGINE (3D GPU Accelerated) */
+  /* MOBILE DOT MOVEMENT ENGINE (Fully smoothed 3D GPU Transition) */
   .col-dot {
     position: absolute;
     bottom: 0;  
@@ -315,11 +315,13 @@ body.info-active #circle-btn {
     margin-top: 0;
     z-index: 20;
     transform: translate3d(calc(-50vw + 1.5rem + 10px), 0, 0);
-    transition: none; 
+    /* Transition is permanently active to ensure smooth mobile gliding */
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); 
   }
 
-  body.layout-ready .col-dot {
-    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); 
+  /* Safely disables the transition only on the exact frame of page reload to prevent jumping */
+  body:not(.layout-ready) .col-dot {
+    transition: none !important;
   }
 
   body.info-active .col-dot {
