@@ -1,8 +1,12 @@
 @font-face {
   font-family: 'FaktPro-Blond';
-  src: local('FaktPro-Blond'), local('Fakt Pro Blond');
+  /* First checks if the user has it installed locally, then downloads the web files if they don't */
+  src: local('FaktPro-Blond'), local('Fakt Pro Blond'),
+       url('FaktPro-Blond.woff2') format('woff2'),
+       url('FaktPro-Blond.woff') format('woff');
   font-weight: 400;
   font-style: normal;
+  font-display: swap; /* Tells the browser to show the system font instantly, then smoothly swap to Fakt Pro once it downloads */
 }
 
 * {
