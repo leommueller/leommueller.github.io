@@ -307,19 +307,22 @@ body.info-active #circle-btn {
     display: none; 
   }
 
-  /* MOBILE DOT MOVEMENT ENGINE (Fully smoothed 3D GPU Transition) */
+  /* MOBILE DOT MOVEMENT ENGINE (Optimized for iOS WebKit GPU Layer Composition) */
   .col-dot {
     position: absolute;
     bottom: 0;  
     right: 0;   
     margin-top: 0;
     z-index: 20;
+    /* Forces iOS to promote this wrapper to its own dedicated hardware layer beforehand */
+    will-change: transform;
     transform: translate3d(calc(-50vw + 1.5rem + 10px), 0, 0);
-    /* Transition is permanently active to ensure smooth mobile gliding */
     transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); 
+    /* Prevents iOS Safari from flickering the blend mode during composite movement */
+    -webkit-transform-style: flat;
+    transform-style: flat;
   }
 
-  /* Safely disables the transition only on the exact frame of page reload to prevent jumping */
   body:not(.layout-ready) .col-dot {
     transition: none !important;
   }
